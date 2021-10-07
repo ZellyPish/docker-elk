@@ -12,17 +12,190 @@ services:
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
       - type: volume
-        source: elasticsearch
+        source: data01
         target: /usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
-      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
-      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
-      discovery.type: single-node
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      
+      network.publish_host: _eth0_
+      
+      node.name: master-1
+      node.roles: master
+      
+      
+      discovery.seed_hosts: es2, es3, es4, es5, es6
+      
+      cluster.initial_master_nodes: master-1, master-2, master-3
+      cluster.name: labangba_cluster
+    networks:
+      - elk
+
+  es2:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: data02
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+    environment:
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      
+      network.publish_host: _eth0_
+      
+      node.name: master-2
+      node.roles: master
+      
+      
+      discovery.seed_hosts: elasticsearch, es3, es4, es5, es6
+      
+      cluster.initial_master_nodes: master-1, master-2, master-3
+      cluster.name: labangba_cluster
+    networks:
+      - elk
+  
+  es3:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: data03
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+    environment:
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      
+      network.publish_host: _eth0_
+      
+      node.name: master-3
+      node.roles: master
+      
+      
+      discovery.seed_hosts: elasticsearch, es2, es4, es5, es6
+      
+      cluster.initial_master_nodes: master-1, master-2, master-3
+      cluster.name: labangba_cluster
+    networks:
+      - elk
+
+  es4:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: data04
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9203:9200"
+      - "9303:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx512m -Xms512m"
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      
+      network.publish_host: _eth0_
+      
+      node.name: data-1
+      node.roles: data
+      
+      
+      discovery.seed_hosts: elasticsearch, es2, es3, es5, es6
+      
+      cluster.initial_master_nodes: master-1, master-2, master-3
+      cluster.name: labangba_cluster
+    networks:
+      - elk
+
+  es5:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: data05
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9204:9200"
+      - "9304:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx512m -Xms512m"
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      
+      network.publish_host: _eth0_
+      
+      node.name: data-2
+      node.roles: data
+      
+      
+      discovery.seed_hosts: elasticsearch, es2, es3, es4, es6
+      
+      cluster.initial_master_nodes: master-1, master-2, master-3
+      cluster.name: labangba_cluster
+    networks:
+      - elk
+
+  es6:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: data06
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9205:9200"
+      - "9305:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx512m -Xms512m"
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      
+      network.publish_host: _eth0_
+      
+      node.name: data-3
+      node.roles: data
+      
+      
+      discovery.seed_hosts: elasticsearch, es2, es3, es4, es5
+      
+      cluster.initial_master_nodes: master-1, master-2, master-3
+      cluster.name: labangba_cluster
     networks:
       - elk
 
@@ -39,6 +212,10 @@ services:
       - type: bind
         source: ./logstash/pipeline
         target: /usr/share/logstash/pipeline
+        read_only: true
+      - type: bind
+        source: ./logstash/mysql-connector-java-8.0.25.jar
+        target: /usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.25.jar
         read_only: true
     ports:
       - "5044:5044"
@@ -64,6 +241,7 @@ services:
         read_only: true
     ports:
       - "5601:5601"
+      - "3002:3002"
     networks:
       - elk
     depends_on:
@@ -74,4 +252,15 @@ networks:
     driver: bridge
 
 volumes:
-  elasticsearch:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  data03:
+    driver: local
+  data04:
+    driver: local
+  data05:
+    driver: local
+  data06:
+    driver: local

@@ -27,15 +27,23 @@ metricbeat.modules:
   hosts: ['unix:///var/run/docker.sock']
   period: 10s
   enabled: true
+- module: elasticsearch
+  xpack.enabled: true
+  period: 10s
+  hosts: ['http://elasticsearch:9200', 'http://es2:9200', 'http://es3:9200', 'http://es4:9200', 'http://es5:9200', 'http://es6:9200']
+  username: elastic
+  password: cv3inc
 
 processors:
   - add_cloud_metadata: ~
 
 output.elasticsearch:
-  hosts: ['http://elasticsearch:9200']
+  hosts: ['http://elasticsearch:9200', 'http://es2:9200', 'http://es3:9200', 'http://es4:9200', 'http://es5:9200', 'http://es6:9200']
   username: elastic
-  password: changeme
+  password: cv3inc
 
+setup.kibana:
+  host: 'https://host.docker.internal:5601'
 ## HTTP endpoint for health checking
 ## https://www.elastic.co/guide/en/beats/metricbeat/current/http-endpoint.html
 #
