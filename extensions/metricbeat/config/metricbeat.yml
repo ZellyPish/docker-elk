@@ -43,7 +43,7 @@ output.elasticsearch:
   password: cv3inc
 
 setup.kibana:
-  host: 'https://host.docker.internal:5601'
+  host: 'https://kibana:5601'
 ## HTTP endpoint for health checking
 ## https://www.elastic.co/guide/en/beats/metricbeat/current/http-endpoint.html
 #

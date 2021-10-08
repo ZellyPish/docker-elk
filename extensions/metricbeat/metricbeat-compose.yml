@@ -44,3 +44,8 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - es2
+      - es3
+      - es4
+      - es5
+      - es6

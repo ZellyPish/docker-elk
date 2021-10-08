@@ -8,7 +8,7 @@
 # Encryption keys to protect application secrets.
 secret_management.encryption_keys:
   # add encryption keys below
-  #- add encryption keys here
+  - 5a7c400fbf7f0508412889729c25c5b0f70d3c0a8488148879ca86f0c040d2cf
 
 ## ----------------------------------------------------
 
@@ -21,7 +21,7 @@ ent_search.external_url: http://localhost:3002
 # Elasticsearch URL and credentials
 elasticsearch.host: http://elasticsearch:9200
 elasticsearch.username: elastic
-elasticsearch.password: changeme
+elasticsearch.password: cv3inc
 
 # Allow Enterprise Search to modify Elasticsearch settings. Used to enable auto-creation of Elasticsearch indexes.
 allow_es_settings_modification: true

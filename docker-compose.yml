@@ -14,6 +14,9 @@ services:
       - type: volume
         source: data01
         target: /usr/share/elasticsearch/data
+      - type: volume
+        source: certs
+        target: $CERTS_DIR
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -31,6 +34,16 @@ services:
       
       cluster.initial_master_nodes: master-1, master-2, master-3
       cluster.name: labangba_cluster
+
+      xpack.security.enabled: 'true'
+      xpack.security.http.ssl.key: $CERTS_DIR/elasticsearch/elasticsearch.key
+      xpack.security.http.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.http.ssl.certificate: $CERTS_DIR/elasticsearch/elasticsearch.crt
+      xpack.security.transport.ssl.enabled: 'true'
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.transport.ssl.certificate: $CERTS_DIR/elasticsearch/elasticsearch.crt
+      xpack.security.transport.ssl.key: $CERTS_DIR/elasticsearch/elasticsearch.key
     networks:
       - elk
 
@@ -47,6 +60,9 @@ services:
       - type: volume
         source: data02
         target: /usr/share/elasticsearch/data
+      - type: volume
+        source: certs
+        target: $CERTS_DIR
     ports:
       - "9201:9200"
       - "9301:9300"
@@ -64,6 +80,17 @@ services:
       
       cluster.initial_master_nodes: master-1, master-2, master-3
       cluster.name: labangba_cluster
+
+      xpack.security.enabled: 'true'
+      xpack.security.http.ssl.enabled: 'true'
+      xpack.security.http.ssl.key: $CERTS_DIR/es2/es2.key
+      xpack.security.http.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.http.ssl.certificate: $CERTS_DIR/es2/es2.crt
+      xpack.security.transport.ssl.enabled: 'true'
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.transport.ssl.certificate: $CERTS_DIR/es2/es2.crt
+      xpack.security.transport.ssl.key: $CERTS_DIR/es2/es2.key
     networks:
       - elk
   
@@ -80,6 +107,9 @@ services:
       - type: volume
         source: data03
         target: /usr/share/elasticsearch/data
+      - type: volume
+        source: certs
+        target: $CERTS_DIR
     ports:
       - "9202:9200"
       - "9302:9300"
@@ -97,6 +127,16 @@ services:
       
       cluster.initial_master_nodes: master-1, master-2, master-3
       cluster.name: labangba_cluster
+
+      xpack.security.enabled: 'true'
+      xpack.security.http.ssl.key: $CERTS_DIR/es3/es3.key
+      xpack.security.http.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.http.ssl.certificate: $CERTS_DIR/es3/es3.crt
+      xpack.security.transport.ssl.enabled: 'true'
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.transport.ssl.certificate: $CERTS_DIR/es3/es3.crt
+      xpack.security.transport.ssl.key: $CERTS_DIR/es3/es3.key
     networks:
       - elk
 
@@ -113,6 +153,9 @@ services:
       - type: volume
         source: data04
         target: /usr/share/elasticsearch/data
+      - type: volume
+        source: certs
+        target: $CERTS_DIR
     ports:
       - "9203:9200"
       - "9303:9300"
@@ -130,6 +173,15 @@ services:
       
       cluster.initial_master_nodes: master-1, master-2, master-3
       cluster.name: labangba_cluster
+      xpack.security.enabled: 'true'
+      xpack.security.http.ssl.key: $CERTS_DIR/es4/es4.key
+      xpack.security.http.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.http.ssl.certificate: $CERTS_DIR/es4/es4.crt
+      xpack.security.transport.ssl.enabled: 'true'
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.transport.ssl.certificate: $CERTS_DIR/es4/es4.crt
+      xpack.security.transport.ssl.key: $CERTS_DIR/es4/es4.key
     networks:
       - elk
 
@@ -146,6 +198,9 @@ services:
       - type: volume
         source: data05
         target: /usr/share/elasticsearch/data
+      - type: volume
+        source: certs
+        target: $CERTS_DIR
     ports:
       - "9204:9200"
       - "9304:9300"
@@ -163,6 +218,16 @@ services:
       
       cluster.initial_master_nodes: master-1, master-2, master-3
       cluster.name: labangba_cluster
+
+      xpack.security.enabled: 'true'
+      xpack.security.http.ssl.key: $CERTS_DIR/es5/es5.key
+      xpack.security.http.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.http.ssl.certificate: $CERTS_DIR/es5/es5.crt
+      xpack.security.transport.ssl.enabled: 'true'
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.transport.ssl.certificate: $CERTS_DIR/es5/es5.crt
+      xpack.security.transport.ssl.key: $CERTS_DIR/es5/es5.key
     networks:
       - elk
 
@@ -179,6 +244,9 @@ services:
       - type: volume
         source: data06
         target: /usr/share/elasticsearch/data
+      - type: volume
+        source: certs
+        target: $CERTS_DIR
     ports:
       - "9205:9200"
       - "9305:9300"
@@ -196,6 +264,16 @@ services:
       
       cluster.initial_master_nodes: master-1, master-2, master-3
       cluster.name: labangba_cluster
+
+      xpack.security.enabled: 'true'
+      xpack.security.http.ssl.key: $CERTS_DIR/es6/es6.key
+      xpack.security.http.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.http.ssl.certificate: $CERTS_DIR/es6/es6.crt
+      xpack.security.transport.ssl.enabled: 'true'
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.security.transport.ssl.certificate_authorities: $CERTS_DIR/ca/ca.crt
+      xpack.security.transport.ssl.certificate: $CERTS_DIR/es6/es6.crt
+      xpack.security.transport.ssl.key: $CERTS_DIR/es6/es6.key
     networks:
       - elk
 
@@ -228,6 +306,11 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - es2
+      - es3
+      - es4
+      - es5
+      - es6
 
   kibana:
     build:
@@ -239,13 +322,23 @@ services:
         source: ./kibana/config/kibana.yml
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
+      - type: volume
+        source: certs
+        target: $KIBANA_CERTS_DIR
+    environment:
+      server.ssl.certificate: $KIBANA_CERTS_DIR/kibana/kibana.crt
+      server.ssl.key: $KIBANA_CERTS_DIR/kibana/kibana.key
     ports:
       - "5601:5601"
-      - "3002:3002"
     networks:
       - elk
     depends_on:
       - elasticsearch
+      - es2
+      - es3
+      - es4
+      - es5
+      - es6
 
 networks:
   elk:
@@ -263,4 +356,6 @@ volumes:
   data05:
     driver: local
   data06:
+    driver: local
+  certs:
     driver: local

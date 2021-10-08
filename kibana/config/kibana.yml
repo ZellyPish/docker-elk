@@ -4,10 +4,13 @@
 #
 server.name: kibana
 server.host: 0.0.0.0
+
 elasticsearch.hosts: [ "http://elasticsearch:9200", "http://es2:9200", "http://es3:9200", "http://es4:9200", "http://es5:9200", "http://es6:9200" ]
 monitoring.ui.container.elasticsearch.enabled: true
-enterpriseSearch.host: 'http://host.docker.internal:3002'
+enterpriseSearch.host: 'https://localhost:3002'
 ## X-Pack security credentials
 #
 elasticsearch.username: elastic
 elasticsearch.password: cv3inc
+
+elasticsearch.ssl.certificateAuthorities: [ "config/elasticsearch-ca.pem" ]
